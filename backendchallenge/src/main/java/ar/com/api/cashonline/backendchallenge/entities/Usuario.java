@@ -4,23 +4,32 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "usuario")
 public class Usuario {
 
     @Id
-    @Column(name = "empleado_id")
+    @Column(name = "usuario_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int usuarioId;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Prestamo> loans = new ArrayList<Prestamo>();
+
     private String email;
+
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
     private String dni;
     private int edad;
-    private Map<Integer, Prestamo> loans = new HashMap<Integer, Prestamo>();
+    
 
     public Usuario(int usuarioId, String email, String firstName, String lastName, String dni, int edad,
-            Map<Integer, Prestamo> loans) {
+            List<Prestamo> loans) {
         this.usuarioId = usuarioId;
         this.email = email;
         this.firstName = firstName;
@@ -29,6 +38,8 @@ public class Usuario {
         this.edad = edad;
         this.loans = loans;
     }
+
+    
 
     public Usuario() {
     }
@@ -65,11 +76,11 @@ public class Usuario {
         this.lastName = lastName;
     }
 
-    public Map<Integer, Prestamo> getLoans() {
+    public List<Prestamo> getLoans() {
         return loans;
     }
 
-    public void setLoans(Map<Integer, Prestamo> loans) {
+    public void setLoans(List<Prestamo> loans) {
         this.loans = loans;
     }
 
@@ -102,5 +113,19 @@ public class Usuario {
     public void setEdad(int edad) {
         this.edad = edad;
     }
+    public void setPrestamo(List<Prestamo> loans) {
+        this.loans = loans;
+    }
+
+    public List<Prestamo> getPrestamo(List<Prestamo> loans) {
+        return loans;
+    }
+
+    public void agregarPrestamo(Prestamo prestamo) {
+        prestamo.setUsuario(this);
+        this.loans.add(prestamo);
+
+    }
+
 
 }

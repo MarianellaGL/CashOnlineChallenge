@@ -19,7 +19,7 @@ public class UsuarioService {
     UsuarioRepository repo;
 
     @Autowired
-    PrestamoService prestamoService;
+    PrestamoService ps;
 
     public Usuario buscarPorId(int id) {
 
@@ -56,5 +56,17 @@ public class UsuarioService {
 
         return repo.findAll();
     }
+
+   public Usuario bajaUsuario(int id){
+
+        Usuario u = this.buscarPorId(id);
+         /**Prestamo p = ps.bajaPrestamo(u.getPrestamo(p.getIdPrestamo())));*/
+      
+
+        repo.save(u);
+
+        return u;
+    }
+
 
 }

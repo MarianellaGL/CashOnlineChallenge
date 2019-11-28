@@ -7,14 +7,29 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Entity
+@Table(name = "prestamo")
 public class Prestamo {
 
+    @Id
+    @Column(name = "id_prestamo")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPrestamo;
+
+    @Column(name = "total_prestamo")
     private BigDecimal totalPrestamo;
-    private Usuario usuario;
+    @Column(name = "fecha_prestamo")
     private Date fechaPrestamo;
+    @Column(name = "cant_cuotas")
     private Integer cantCuotas;
+
+    @Column(name = "monto_cuotas")
     private BigDecimal montoCuotas;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "usuario_id")
+    private Usuario usuario;
+
 
     public Prestamo(int idPrestamo, BigDecimal totalPrestamo, Usuario usuario, Date fechaPrestamo, Integer cantCuotas,
             BigDecimal montoCuotas) {
@@ -50,6 +65,7 @@ public class Prestamo {
     }
 
     public void setUsuario(Usuario usuario) {
+        
         this.usuario = usuario;
     }
 

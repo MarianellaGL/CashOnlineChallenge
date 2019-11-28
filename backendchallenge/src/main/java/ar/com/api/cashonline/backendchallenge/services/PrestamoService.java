@@ -31,5 +31,12 @@ public class PrestamoService {
 
         return repo.findByUsuario(u);
     }
-    
+
+    public List<Prestamo> listloans() {
+        return repo.findAll();
+    }
+
+
+  
+
 }
