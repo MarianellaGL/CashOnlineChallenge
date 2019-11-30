@@ -1,16 +1,16 @@
 package ar.com.api.cashonline.backendchallenge.services;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 import org.omg.CORBA.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.com.api.cashonline.backendchallenge.entities.Prestamo;
 import ar.com.api.cashonline.backendchallenge.entities.Usuario;
 import ar.com.api.cashonline.backendchallenge.excepciones.UserEdadException;
 import ar.com.api.cashonline.backendchallenge.repo.UsuarioRepository;
+import ar.com.api.cashonline.backendchallenge.services.PrestamoService;
+
 
 @Service
 public class UsuarioService {
@@ -60,7 +60,9 @@ public class UsuarioService {
    public Usuario bajaUsuario(int id){
 
         Usuario u = this.buscarPorId(id);
-         /**Prestamo p = ps.bajaPrestamo(u.getPrestamo(p.getIdPrestamo())));*/
+        u.getLoans();
+        ps.bajaPrestamo(id);
+        
       
 
         repo.save(u);

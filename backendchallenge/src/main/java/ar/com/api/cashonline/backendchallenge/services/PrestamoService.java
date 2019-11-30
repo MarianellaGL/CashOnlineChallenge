@@ -3,11 +3,14 @@ package ar.com.api.cashonline.backendchallenge.services;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ar.com.api.cashonline.backendchallenge.entities.Prestamo;
 import ar.com.api.cashonline.backendchallenge.entities.Usuario;
 import ar.com.api.cashonline.backendchallenge.repo.PrestamoRepository;
 
+
+@Service
 public class PrestamoService {
 
     @Autowired
@@ -35,6 +38,17 @@ public class PrestamoService {
     public List<Prestamo> listloans() {
         return repo.findAll();
     }
+
+    
+   public Prestamo bajaPrestamo(int id){
+
+    Prestamo p = this.buscarPorId(id);
+  
+
+    repo.save(p);
+
+    return p;
+}
 
 
   
