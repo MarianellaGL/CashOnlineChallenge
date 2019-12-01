@@ -8,23 +8,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.com.api.cashonline.backendchallenge.entities.Prestamo;
 import ar.com.api.cashonline.backendchallenge.entities.Usuario;
+import ar.com.api.cashonline.backendchallenge.excepciones.LoanException;
 import ar.com.api.cashonline.backendchallenge.excepciones.UserEdadException;
+import ar.com.api.cashonline.backendchallenge.models.request.RegistrationLoanRequest;
 import ar.com.api.cashonline.backendchallenge.models.request.RegistrationRequest;
 import ar.com.api.cashonline.backendchallenge.models.response.RegistrationResponse;
 import ar.com.api.cashonline.backendchallenge.models.response.UsuarioandLoansResponse;
+import ar.com.api.cashonline.backendchallenge.services.PrestamoService;
 import ar.com.api.cashonline.backendchallenge.services.UsuarioService;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
-public class UsuarioController {
+public class CashOnlineController {
 
     @Autowired
     UsuarioService usService;
+    @Autowired
+    PrestamoService ps;
 
-    @PostMapping("/usuarios/register")
+    @PostMapping("/auth/register")
     public RegistrationResponse postRegisterUser(@RequestBody RegistrationRequest req)
             throws UserEdadException, UserException {
         RegistrationResponse r = new RegistrationResponse();
@@ -33,6 +39,21 @@ public class UsuarioController {
         r.isOk = true;
         r.message = "usuario registrado con éxito.";
         r.usuarioId = usuarioCreadoId;
+
+        return r;
+
+    }
+
+
+    @PostMapping("users/{id}/new/loan")
+    public UsuarioandLoansResponse postNewLoan(@RequestBody RegistrationLoanRequest req)
+            throws LoanException {
+                UsuarioandLoansResponse r = new UsuarioandLoansResponse();
+
+        int prestamoCreadoId = ps.crearPrestamo(req.totalPrestamo, req.cantCuotas, req.montoCuotas, req.fechaPrestamo);
+        r.isOk = true;
+        r.message = "Prestamo Generado";
+        r.prestamoCreadoId = prestamoCreadoId;
 
         return r;
 
@@ -53,7 +74,7 @@ public UsuarioandLoansResponse bajaUsuario(@PathVariable int id){
 }
 
 
-@GetMapping("/usuarios/{id}")
+@GetMapping("/users/{id}")
 public Usuario getUsuarioById(@PathVariable int id){
 
 
@@ -61,6 +82,19 @@ public Usuario getUsuarioById(@PathVariable int id){
 
     return u;
 }
+
+/**GET /loans?page=1&size=50  /loans?page=1&size=50&user_id=2
+ */
+
+@GetMapping("/loans/{id}")
+public Prestamo getPrestamoById(@PathVariable int id){
+
+
+    Prestamo p = ps.buscarPorId(id);
+
+    return p;
+}
+
 
 
 

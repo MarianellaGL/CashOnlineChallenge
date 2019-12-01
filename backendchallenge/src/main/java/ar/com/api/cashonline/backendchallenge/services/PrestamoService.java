@@ -1,6 +1,7 @@
 package ar.com.api.cashonline.backendchallenge.services;
 
 import java.util.*;
+import java.math.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,26 @@ public class PrestamoService {
 
     return p;
 }
+
+public int crearPrestamo( BigDecimal totalPrestamo, Integer cantCuotas, BigDecimal montoCuotas, Date fechaPrestamo){
+
+    Prestamo p =  new Prestamo();
+    p.setTotalPrestamo(totalPrestamo);
+    p.setCantCuotas(cantCuotas);
+    p.setMontoCuotas(montoCuotas);
+    
+    
+
+    Date f = new Date();
+
+    p.setFechaPrestamo(f);
+
+    return p.getIdPrestamo();
+
+    
+
+
+    }
 
 
   

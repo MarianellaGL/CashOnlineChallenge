@@ -17,14 +17,14 @@ public class Prestamo {
     private int idPrestamo;
 
     @Column(name = "total_prestamo")
-    private BigDecimal totalPrestamo;
+    private BigDecimal totalPrestamo = new BigDecimal(0);
     @Column(name = "fecha_prestamo")
     private Date fechaPrestamo;
     @Column(name = "cant_cuotas")
     private Integer cantCuotas;
 
     @Column(name = "monto_cuotas")
-    private BigDecimal montoCuotas;
+    private BigDecimal montoCuotas = new BigDecimal (0);
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "usuario_id")

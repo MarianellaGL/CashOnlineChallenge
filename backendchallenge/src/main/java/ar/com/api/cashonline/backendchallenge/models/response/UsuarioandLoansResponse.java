@@ -6,6 +6,8 @@ public class UsuarioandLoansResponse {
     public String message = "";
 
     public int usuarioId;
+
+    public int prestamoCreadoId;
     
 
 }
