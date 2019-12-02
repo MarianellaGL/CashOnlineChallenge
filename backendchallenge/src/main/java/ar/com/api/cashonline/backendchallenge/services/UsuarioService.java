@@ -46,9 +46,11 @@ public class UsuarioService {
         u.setEmail(email);
         u.setDni(dni);
         u.setEdad(edad);
-        
 
+        repo.save(u);
+    
         return u.getUsuarioId();
+
 
     }
 
@@ -59,16 +61,13 @@ public class UsuarioService {
 
    public Usuario bajaUsuario(int id){
 
-        Usuario u = this.buscarPorId(id);
-        u.getLoans();
-        ps.bajaPrestamo(id);
-        
+        Usuario u = this.buscarPorId(id);       
       
 
-        repo.save(u);
+        repo.delete(u);
 
         return u;
     }
-
+//rel tipo cascada
 
 }

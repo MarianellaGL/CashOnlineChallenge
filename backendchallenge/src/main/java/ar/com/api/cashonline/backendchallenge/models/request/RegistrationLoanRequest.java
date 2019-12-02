@@ -7,12 +7,11 @@ import ar.com.api.cashonline.backendchallenge.entities.Usuario;
 
 public class RegistrationLoanRequest {
 
-    public Usuario usuario;
+    public int usuarioId;
 
     public BigDecimal totalPrestamo; 
     public Integer cantCuotas; 
     public BigDecimal montoCuotas; 
-    public Date fechaPrestamo;
 
 
     

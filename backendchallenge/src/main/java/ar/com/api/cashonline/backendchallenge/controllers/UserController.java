@@ -21,9 +21,8 @@ import ar.com.api.cashonline.backendchallenge.services.UsuarioService;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
 @RestController
-public class CashOnlineController {
+public class UserController {
 
     @Autowired
     UsuarioService usService;
@@ -44,58 +43,31 @@ public class CashOnlineController {
 
     }
 
+   
+     //lo de abajo es en un repo
+    //select count from tabla where user id =:?(no es asi tal cual)
+    //long contarporusuario(usuario)
+    //declaras en el service el public long contaregistros: repo.count()
 
-    @PostMapping("users/{id}/new/loan")
-    public UsuarioandLoansResponse postNewLoan(@RequestBody RegistrationLoanRequest req)
-            throws LoanException {
-                UsuarioandLoansResponse r = new UsuarioandLoansResponse();
+    @DeleteMapping("/users/{id}")
+    public UsuarioandLoansResponse bajaUsuario(@PathVariable int id) {
+        UsuarioandLoansResponse r = new UsuarioandLoansResponse();
 
-        int prestamoCreadoId = ps.crearPrestamo(req.totalPrestamo, req.cantCuotas, req.montoCuotas, req.fechaPrestamo);
+        Usuario u = usService.bajaUsuario(id);
+
         r.isOk = true;
-        r.message = "Prestamo Generado";
-        r.prestamoCreadoId = prestamoCreadoId;
+        r.message = "Usuario " + u.getFirstName() + " dado de baja.";
+        r.usuarioId = u.getId();
 
         return r;
-
     }
 
+    @GetMapping("/users/{id}")
+    public Usuario getUsuarioById(@PathVariable int id) {
 
-@DeleteMapping("/usuarios/{id}")
-public UsuarioandLoansResponse bajaUsuario(@PathVariable int id){
-     UsuarioandLoansResponse r = new UsuarioandLoansResponse();
+        Usuario u = usService.buscarPorId(id);
 
-    Usuario u = usService.bajaUsuario(id);
-
-    r.isOk = true;
-    r.message = "Usuario " + u.getFirstName() + " dado de baja.";
-    r.usuarioId = u.getId();
-
-    return r;
-}
-
-
-@GetMapping("/users/{id}")
-public Usuario getUsuarioById(@PathVariable int id){
-
-
-    Usuario u = usService.buscarPorId(id);
-
-    return u;
-}
-
-/**GET /loans?page=1&size=50  /loans?page=1&size=50&user_id=2
- */
-
-@GetMapping("/loans/{id}")
-public Prestamo getPrestamoById(@PathVariable int id){
-
-
-    Prestamo p = ps.buscarPorId(id);
-
-    return p;
-}
-
-
-
+        return u;
+    }
 
 }

@@ -3,6 +3,7 @@ package ar.com.api.cashonline.backendchallenge.services;
 import java.util.*;
 import java.math.*;
 
+import org.omg.CORBA.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +11,14 @@ import ar.com.api.cashonline.backendchallenge.entities.Prestamo;
 import ar.com.api.cashonline.backendchallenge.entities.Usuario;
 import ar.com.api.cashonline.backendchallenge.repo.PrestamoRepository;
 
-
 @Service
 public class PrestamoService {
 
     @Autowired
     PrestamoRepository repo;
+
+    @Autowired
+    UsuarioService us;
 
     public void grabar(Prestamo p) {
         repo.save(p);
@@ -31,38 +34,30 @@ public class PrestamoService {
         return null;
     }
 
-    public Prestamo buscarPorUsuario(Usuario u) {
+    public List<Prestamo> buscarPorUsuarioId(int usuarioId, int size, int offset) {
 
-        return repo.findByUsuario(u);
+        return repo.findByUsuarioid(usuarioId, size, offset);
     }
 
-    public List<Prestamo> listloans() {
-        return repo.findAll();
+    public List<Prestamo> listloans(int  size, int offset) {
+        return repo.listarPrestamos(size, offset);
     }
 
-    
-   public Prestamo bajaPrestamo(int id){
 
-    Prestamo p = this.buscarPorId(id);
-  
+    public int crearPrestamo(int usuarioId, BigDecimal totalPrestamo, Integer cantCuotas, BigDecimal montoCuotas
+        ) throws UserException {
+    Date f = new Date();
 
-    repo.save(p);
-
-    return p;
-}
-
-public int crearPrestamo( BigDecimal totalPrestamo, Integer cantCuotas, BigDecimal montoCuotas, Date fechaPrestamo){
+    Usuario u = us.buscarPorId(usuarioId);
 
     Prestamo p =  new Prestamo();
+    p.setFechaPrestamo(f);
     p.setTotalPrestamo(totalPrestamo);
     p.setCantCuotas(cantCuotas);
     p.setMontoCuotas(montoCuotas);
-    
-    
 
-    Date f = new Date();
-
-    p.setFechaPrestamo(f);
+    u.agregarPrestamo(p);
+    us.grabar(u);
 
     return p.getIdPrestamo();
 
