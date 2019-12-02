@@ -7,9 +7,9 @@ public class Paging {
 
     public int page;
     public int size;
-    public int total;
+    public long total;
 
-    public Paging(int page, int size, int total) {
+    public Paging(int page, int size, long total) {
         this.page = page;
         this.size = size;
         this.total = total;

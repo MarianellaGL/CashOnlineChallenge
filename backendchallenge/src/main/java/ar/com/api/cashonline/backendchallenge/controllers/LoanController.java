@@ -40,7 +40,7 @@ public class LoanController {
      * GET /loans?page=1&size=50 /loans?page=1&size=50&user_id=2
      */
 
-    @GetMapping("/loans")
+    @GetMapping("/loans/{id}")
     public Prestamo getPrestamoById(@PathVariable int id) {
 
         Prestamo p = ps.buscarPorId(id);
@@ -48,7 +48,7 @@ public class LoanController {
         return p;
     }
 
-    @GetMapping("/loans/{id}")
+    @GetMapping("/loans")
     public LoansResponse getPrestamoByUsuarioId(@RequestParam(value = "usuario_id", required = false) int usuarioId,
             @RequestParam(value = "page", required = true) int page,
             @RequestParam(value = "size", required = true) int size) {
@@ -61,8 +61,10 @@ public class LoanController {
 
         if (usuarioId == 0) {
             loans = ps.listloans(size, offset);
+            r.paging.total = ps.contar();
         } else {
             loans = ps.buscarPorUsuarioId(usuarioId, size, offset);
+            r.paging.total = ps.contar();
         }
 
         r.items=loans;

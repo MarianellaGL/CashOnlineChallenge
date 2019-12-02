@@ -43,6 +43,11 @@ public class PrestamoService {
         return repo.listarPrestamos(size, offset);
     }
 
+    public long contar(){
+      return repo.count();
+
+    }
+
 
     public int crearPrestamo(int usuarioId, BigDecimal totalPrestamo, Integer cantCuotas, BigDecimal montoCuotas
         ) throws UserException {

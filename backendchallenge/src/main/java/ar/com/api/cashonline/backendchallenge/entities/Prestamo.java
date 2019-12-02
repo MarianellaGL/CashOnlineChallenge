@@ -9,12 +9,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "prestamo")
-@NamedNativeQuery(name = "Prestamo.findByUsuarioid", query ="SELECT * FROM prestamo WHERE usuario_id = ? LIMIT ?, ?" )
-@NamedNativeQuery(name = "Prestamo.listarPrestamos", query = "SELECT * FROM prestamo LIMIT ?,?") //LIMIT (Comienzo=offset),(Longitud=size)
+//@NamedNativeQuery(name = "Prestamo.findByUsuarioid", query ="SELECT * FROM prestamo WHERE usuario_id = ? LIMIT ?, ?" )
+//@NamedNativeQuery(name = "Prestamo.listarPrestamos", query = "SELECT * FROM prestamo LIMIT ?,?") //LIMIT (Comienzo=offset),(Longitud=size)
 public class Prestamo {
 
     @Id
-    @Column(name = "id_prestamo")
+    @Column(name = "prestamo_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPrestamo;
 

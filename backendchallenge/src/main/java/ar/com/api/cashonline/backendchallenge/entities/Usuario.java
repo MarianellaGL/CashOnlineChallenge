@@ -15,7 +15,6 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int usuarioId;
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Prestamo> loans = new ArrayList<Prestamo>();
 
     private String email;
