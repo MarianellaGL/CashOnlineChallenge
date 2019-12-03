@@ -72,13 +72,29 @@ public enum UserValidationType {
         
     User_OK,
     firstName_INVALIDO,
-    EMAIL_INVALIDO,
     EDAD_INVALIDO, 
-    DNI_DUPLICADO,
+    DNI_INVALIDO,
 
     USER_DATOS_INVALIDOS
     
 }
 
 
+
+public UserValidationType verifyUser(User user) {
+
+    if (user.getFirstName() == null)
+        return  UserValidationType.USER_DATOS_INVALIDOS;
+
+    if (user.getAge() == 0)
+        return UserValidationType.USER_DATOS_INVALIDOS;
+
+    if (user.getDni() == null)
+        return UserValidationType.USER_DATOS_INVALIDOS;
+
+
+
+
+return UserValidationType.User_OK;
+}
 }
