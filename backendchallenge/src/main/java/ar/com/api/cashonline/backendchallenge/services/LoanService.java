@@ -35,13 +35,13 @@ public class LoanService {
         return null;
     }
 
-    public List<Loan> buscarPorUsuarioId(int userId, int size, int offset) {
+    public List<Loan> buscarPorUsuarioId(Integer userId, int size, int offset) {
 
-        return repo.findByUserid(userId, size, offset);
+        return repo.listarPrestamosPorUsuario(userId, offset, size);
     }
 
     public List<Loan> listloans(int  size, int offset) {
-        return repo.listarPrestamos(size, offset);
+        return repo.findPrestamos(offset,size);
     }
 
     public long contar(){
@@ -49,8 +49,12 @@ public class LoanService {
 
     }
 
+    public long contarPorUsuario(Integer userId){
+        return repo.countByUserid(userId);
+    }
 
-    public int createLoan(int userId, BigDecimal totalLoan, Integer cantLoan, BigDecimal loanAmount
+
+    public int createLoan(Integer userId, BigDecimal totalLoan, Integer cantLoan, BigDecimal loanAmount
         ) throws UserException {
             
     Date f = new Date();

@@ -19,17 +19,13 @@ public interface LoanRepository  extends JpaRepository<Loan, Integer>{
 
     public Loan findByUser(User u);
     @Query(value ="SELECT * FROM loan LIMIT ?,?", nativeQuery = true)
-    List<Loan> findPrestamo(int offset, int size);
-    @Query(value = "SELECT count(*) FROM loan WHERE user_id = ? ", nativeQuery = true)
-    List<Loan> findByUserid(int userId,int offset, int size);
-    @Query(value = "SELECT * FROM loan WHERE user_id = ? LIMIT ?,?", nativeQuery = true)
-    public List<Loan> listarPrestamos(int offset, int size);
+    List<Loan> findPrestamos(int offset, int size);
+    @Query(value = "SELECT count(*) FROM loan WHERE user_id=? ", nativeQuery = true)
+    long countByUserid(Integer userId);
+   
+    @Query(value = "SELECT * FROM loan WHERE user_id=? LIMIT ?,?", nativeQuery = true)
+    public List<Loan> listarPrestamosPorUsuario(Integer userId, int offset, int size);
 
 }
-
-
-
-
-
 
 

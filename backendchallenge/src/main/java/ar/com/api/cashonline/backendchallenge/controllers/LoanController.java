@@ -47,7 +47,7 @@ public class LoanController {
     }
 
     @GetMapping("/loans")
-    public LoansResponse getPrestamoByUsuarioId(@RequestParam(value = "user_id", required = false) @PathVariable int userId,
+    public LoansResponse getPrestamoByUsuarioId(@RequestParam(value = "user_id", required = false) Integer userId,
             @RequestParam(value = "page", required = true) int page,
             @RequestParam(value = "size", required = true) int size) {
 
@@ -55,14 +55,14 @@ public class LoanController {
 
         List<Loan> loans = new ArrayList<Loan>();
 
-        int offset = (page - 1) * size + 1;
+        int offset = (page - 1) * size;
 
-        if (userId == 0) {
+        if (userId == null) {
             loans = ls.listloans(size, offset);
             r.paging.total = ls.contar();
         } else {
             loans = ls.buscarPorUsuarioId(userId, size, offset);
-            r.paging.total = ls.contar();
+            r.paging.total = ls.contarPorUsuario(userId);
         }
 
         r.items=loans;
