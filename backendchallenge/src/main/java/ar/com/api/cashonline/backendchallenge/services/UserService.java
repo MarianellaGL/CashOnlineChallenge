@@ -66,7 +66,7 @@ public class UserService {
 
         return u;
     }
-//rel tipo cascada
+
 
 public enum UserValidationType {
         
