@@ -6,27 +6,25 @@ import org.omg.CORBA.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.com.api.cashonline.backendchallenge.entities.Usuario;
+import ar.com.api.cashonline.backendchallenge.entities.User;
+
 import ar.com.api.cashonline.backendchallenge.excepciones.UserEdadException;
-import ar.com.api.cashonline.backendchallenge.repo.UsuarioRepository;
-import ar.com.api.cashonline.backendchallenge.services.PrestamoService;
+import ar.com.api.cashonline.backendchallenge.repo.UserRepository;
 
 
 @Service
-public class UsuarioService {
+public class UserService {
 
     @Autowired
-    UsuarioRepository repo;
+    UserRepository repo;
 
-    @Autowired
-    PrestamoService ps;
 
-    public Usuario buscarPorId(int id) {
+    public User buscarPorId(int id) {
 
         return repo.findById(id);
     }
 
-    public void grabar(Usuario u) throws UserException {
+    public void grabar(User u) throws UserException {
         /**
          * UsuarioValidationType r = this.verificarUsuario(u);
          * 
@@ -37,31 +35,31 @@ public class UsuarioService {
 
     }
 
-    public int crearUsuario(String firstName, String lastName, String email, String dni, int edad)
+    public int createUser(String firstName, String lastName, String email, String dni, int age)
             throws UserException, UserEdadException {
-        Usuario u = new Usuario();
+        User u = new User();
 
         u.setFirstName(firstName);
         u.setLastName(lastName);
         u.setEmail(email);
         u.setDni(dni);
-        u.setEdad(edad);
+        u.setAge(age);
 
         repo.save(u);
     
-        return u.getUsuarioId();
+        return u.getUserId();
 
 
     }
 
-    public List<Usuario> getUsuarios() {
+    public List<User> getUsuarios() {
 
         return repo.findAll();
     }
 
-   public Usuario bajaUsuario(int id){
+   public User bajaUsuario(int id){
 
-        Usuario u = this.buscarPorId(id);       
+        User u = this.buscarPorId(id);       
       
 
         repo.delete(u);
@@ -69,5 +67,18 @@ public class UsuarioService {
         return u;
     }
 //rel tipo cascada
+
+public enum UserValidationType {
+        
+    User_OK,
+    firstName_INVALIDO,
+    EMAIL_INVALIDO,
+    EDAD_INVALIDO, 
+    DNI_DUPLICADO,
+
+    USER_DATOS_INVALIDOS
+    
+}
+
 
 }

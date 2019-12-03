@@ -4,18 +4,19 @@ import java.util.*;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 @Entity
-@Table(name = "usuario")
-public class Usuario {
+@Table(name = "user")
+public class User {
 
     @Id
-    @Column(name = "usuario_id")
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int usuarioId;
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Prestamo> loans = new ArrayList<Prestamo>();
+    public int userId;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Loan> loans = new ArrayList<Loan>();
 
     private String email;
 
@@ -24,31 +25,31 @@ public class Usuario {
     @Column(name = "last_name")
     private String lastName;
     private String dni;
-    private int edad;
+    private int age;
     
 
-    public Usuario(int usuarioId, String email, String firstName, String lastName, String dni, int edad,
-            List<Prestamo> loans) {
-        this.usuarioId = usuarioId;
+    public User(int userId, String email, String firstName, String lastName, String dni, int age,
+            List<Loan> loans) {
+        this.userId = userId;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dni = dni;
-        this.edad = edad;
+        this.age = age;
         this.loans = loans;
     }
 
     
 
-    public Usuario() {
+    public User() {
     }
 
     public int getId() {
-        return usuarioId;
+        return userId;
     }
 
-    public void setId(int usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setId(int userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {
@@ -74,27 +75,27 @@ public class Usuario {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    public List<Prestamo> getLoans() {
+    
+    public List<Loan> getLoans() {
         return loans;
     }
 
-    public void setLoans(List<Prestamo> loans) {
+    public void setLoans(List<Loan> loans) {
         this.loans = loans;
     }
 
     @Override
     public String toString() {
-        return "El usuario [firstName=" + firstName + ", usuarioId=" + usuarioId + ", lastName=" + lastName
+        return "El usuario [firstName=" + firstName + ", usuarioId=" + userId + ", lastName=" + lastName
                 + " tiene loans=" + loans + "] pendientes";
     }
 
-    public int getUsuarioId() {
-        return usuarioId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getDni() {
@@ -105,23 +106,16 @@ public class Usuario {
         this.dni = dni;
     }
 
-    public int getEdad() {
-        return edad;
+    public int getAge() {
+        return age;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
-    public void setPrestamo(List<Prestamo> loans) {
-        this.loans = loans;
+    public void setAge(int age) {
+        this.age = age;
     }
 
-    public List<Prestamo> getPrestamo(List<Prestamo> loans) {
-        return loans;
-    }
-
-    public void agregarPrestamo(Prestamo prestamo) {
-        prestamo.setUsuario(this);
+    public void agregarLoans(Loan prestamo) {
+        prestamo.setUser(this);
         this.loans.add(prestamo);
 
     }

@@ -8,36 +8,34 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.com.api.cashonline.backendchallenge.entities.Prestamo;
-import ar.com.api.cashonline.backendchallenge.entities.Usuario;
-import ar.com.api.cashonline.backendchallenge.excepciones.LoanException;
+import ar.com.api.cashonline.backendchallenge.entities.User;
 import ar.com.api.cashonline.backendchallenge.excepciones.UserEdadException;
 import ar.com.api.cashonline.backendchallenge.models.request.RegistrationLoanRequest;
 import ar.com.api.cashonline.backendchallenge.models.request.RegistrationRequest;
 import ar.com.api.cashonline.backendchallenge.models.response.RegistrationResponse;
 import ar.com.api.cashonline.backendchallenge.models.response.UsuarioandLoansResponse;
-import ar.com.api.cashonline.backendchallenge.services.PrestamoService;
-import ar.com.api.cashonline.backendchallenge.services.UsuarioService;
-import org.springframework.web.bind.annotation.PutMapping;
+import ar.com.api.cashonline.backendchallenge.services.LoanService;
+import ar.com.api.cashonline.backendchallenge.services.UserService;
+
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 public class UserController {
 
     @Autowired
-    UsuarioService usService;
+    UserService usService;
     @Autowired
-    PrestamoService ps;
+    LoanService ls;
 
     @PostMapping("/auth/register")
     public RegistrationResponse postRegisterUser(@RequestBody RegistrationRequest req)
             throws UserEdadException, UserException {
         RegistrationResponse r = new RegistrationResponse();
 
-        int usuarioCreadoId = usService.crearUsuario(req.firstName, req.lastName, req.email, req.dni, req.edad);
+        int usuarioCreadoId = usService.createUser(req.firstName, req.lastName, req.email, req.dni, req.age);
         r.isOk = true;
         r.message = "usuario registrado con éxito.";
-        r.usuarioId = usuarioCreadoId;
+        r.userId = usuarioCreadoId;
 
         return r;
 
@@ -53,19 +51,19 @@ public class UserController {
     public UsuarioandLoansResponse bajaUsuario(@PathVariable int id) {
         UsuarioandLoansResponse r = new UsuarioandLoansResponse();
 
-        Usuario u = usService.bajaUsuario(id);
+        User u = usService.bajaUsuario(id);
 
         r.isOk = true;
         r.message = "Usuario " + u.getFirstName() + " dado de baja.";
-        r.usuarioId = u.getId();
+        r.userId = u.getId();
 
         return r;
     }
 
     @GetMapping("/users/{id}")
-    public Usuario getUsuarioById(@PathVariable int id) {
+    public User getUsuarioById(@PathVariable int id) {
 
-        Usuario u = usService.buscarPorId(id);
+        User u = usService.buscarPorId(id);
 
         return u;
     }

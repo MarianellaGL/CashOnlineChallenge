@@ -6,5 +6,5 @@ public class RegistrationRequest {
     public String firstName;
     public String lastName;
     public String dni;
-    public int edad;
+    public int age;
 }
